@@ -758,11 +758,8 @@ static int sblock_try[] = SBLOCKSEARCH;
 /*
  * Common code for mount and mountroot
  */
-static int
-ffs_mountfs(devvp, mp, td)
-	struct vnode *devvp;
-	struct mount *mp;
-	struct thread *td;
+static int 
+ffs_mountfs (struct vnode *devvp, struct mount *mp, struct thread *td)
 {
 	struct ufsmount *ump;
 	struct buf *bp;
@@ -1196,10 +1193,8 @@ ffs_oldfscompat_read(fs, ump, sblockloc)
  * XXX - Parts get retired eventually.
  * Unfortunately new bits get added.
  */
-void
-ffs_oldfscompat_write(fs, ump)
-	struct fs *fs;
-	struct ufsmount *ump;
+void 
+ffs_oldfscompat_write (struct fs *fs, struct ufsmount *ump)
 {
 
 	/*
@@ -1222,10 +1217,8 @@ ffs_oldfscompat_write(fs, ump)
 /*
  * unmount system call
  */
-static int
-ffs_unmount(mp, mntflags)
-	struct mount *mp;
-	int mntflags;
+static int 
+ffs_unmount (struct mount *mp, int mntflags)
 {
 	struct thread *td;
 	struct ufsmount *ump = VFSTOUFS(mp);
@@ -1340,11 +1333,8 @@ fail1:
 /*
  * Flush out all the files in a filesystem.
  */
-int
-ffs_flushfiles(mp, flags, td)
-	struct mount *mp;
-	int flags;
-	struct thread *td;
+int 
+ffs_flushfiles (struct mount *mp, int flags, struct thread *td)
 {
 	struct ufsmount *ump;
 	int qerror, error;
@@ -1412,10 +1402,8 @@ ffs_flushfiles(mp, flags, td)
 /*
  * Get filesystem statistics.
  */
-static int
-ffs_statfs(mp, sbp)
-	struct mount *mp;
-	struct statfs *sbp;
+static int 
+ffs_statfs (struct mount *mp, struct statfs *sbp)
 {
 	struct ufsmount *ump;
 	struct fs *fs;
@@ -1454,9 +1442,8 @@ sync_doupdate(struct inode *ip)
  * cylinder group blocks or inode blocks updates and are written to
  * disk by syncer.
  */
-static int
-ffs_sync_lazy(mp)
-     struct mount *mp;
+static int 
+ffs_sync_lazy (struct mount *mp)
 {
 	struct vnode *mvp, *vp;
 	struct inode *ip;
@@ -1514,10 +1501,8 @@ qupdate:
  * Note: we are always called with the filesystem marked busy using
  * vfs_busy().
  */
-static int
-ffs_sync(mp, waitfor)
-	struct mount *mp;
-	int waitfor;
+static int 
+ffs_sync (struct mount *mp, int waitfor)
 {
 	struct vnode *mvp, *vp, *devvp;
 	struct thread *td;
@@ -1830,12 +1815,8 @@ ffs_vgetf(mp, ino, flags, vpp, ffs_flags)
  * - check that the given client host has export rights and return
  *   those rights via. exflagsp and credanonp
  */
-static int
-ffs_fhtovp(mp, fhp, flags, vpp)
-	struct mount *mp;
-	struct fid *fhp;
-	int flags;
-	struct vnode **vpp;
+static int 
+ffs_fhtovp (struct mount *mp, struct fid *fhp, int flags, struct vnode **vpp)
 {
 	struct ufid *ufhp;
 	struct ufsmount *ump;
@@ -1875,9 +1856,8 @@ ffs_fhtovp(mp, fhp, flags, vpp)
 /*
  * Initialize the filesystem.
  */
-static int
-ffs_init(vfsp)
-	struct vfsconf *vfsp;
+static int 
+ffs_init (struct vfsconf *vfsp)
 {
 
 	ffs_susp_initialize();
@@ -1888,9 +1868,8 @@ ffs_init(vfsp)
 /*
  * Undo the work of ffs_init().
  */
-static int
-ffs_uninit(vfsp)
-	struct vfsconf *vfsp;
+static int 
+ffs_uninit (struct vfsconf *vfsp)
 {
 	int ret;
 
@@ -1903,11 +1882,8 @@ ffs_uninit(vfsp)
 /*
  * Write a superblock and associated information back to disk.
  */
-int
-ffs_sbupdate(ump, waitfor, suspended)
-	struct ufsmount *ump;
-	int waitfor;
-	int suspended;
+int 
+ffs_sbupdate (struct ufsmount *ump, int waitfor, int suspended)
 {
 	struct fs *fs = ump->um_fs;
 	struct buf *sbbp;
@@ -2265,7 +2241,8 @@ ffs_own_mount(const struct mount *mp)
 /* defined in ffs_softdep.c */
 extern void db_print_ffs(struct ufsmount *ump);
 
-DB_SHOW_COMMAND(ffs, db_show_ffs)
+int 
+DB_SHOW_COMMAND (int ffs, int db_show_ffs)
 {
 	struct mount *mp;
 	struct ufsmount *ump;

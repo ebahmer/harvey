@@ -191,14 +191,8 @@ ufs_itimes(struct vnode *vp)
 /*
  * Create a regular file
  */
-static int
-ufs_create(ap)
-	struct vop_create_args /* {
-		struct vnode *a_dvp;
-		struct vnode **a_vpp;
-		struct componentname *a_cnp;
-		struct vattr *a_vap;
-	} */ *ap;
+static int 
+ufs_create (struct vop_create_args *ap)
 {
 	int error;
 
@@ -216,14 +210,8 @@ ufs_create(ap)
  * Mknod vnode call
  */
 /* ARGSUSED */
-static int
-ufs_mknod(ap)
-	struct vop_mknod_args /* {
-		struct vnode *a_dvp;
-		struct vnode **a_vpp;
-		struct componentname *a_cnp;
-		struct vattr *a_vap;
-	} */ *ap;
+static int 
+ufs_mknod (struct vop_mknod_args *ap)
 {
 	struct vattr *vap = ap->a_vap;
 	struct vnode **vpp = ap->a_vpp;
@@ -291,14 +279,8 @@ ufs_open(struct vop_open_args *ap)
  * Update the times on the inode.
  */
 /* ARGSUSED */
-static int
-ufs_close(ap)
-	struct vop_close_args /* {
-		struct vnode *a_vp;
-		int  a_fflag;
-		struct ucred *a_cred;
-		struct thread *a_td;
-	} */ *ap;
+static int 
+ufs_close (struct vop_close_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	int usecount;
@@ -311,14 +293,8 @@ ufs_close(ap)
 	return (0);
 }
 
-static int
-ufs_accessx(ap)
-	struct vop_accessx_args /* {
-		struct vnode *a_vp;
-		accmode_t a_accmode;
-		struct ucred *a_cred;
-		struct thread *a_td;
-	} */ *ap;
+static int 
+ufs_accessx (struct vop_accessx_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct inode *ip = VTOI(vp);
@@ -442,13 +418,8 @@ relock:
 }
 
 /* ARGSUSED */
-static int
-ufs_getattr(ap)
-	struct vop_getattr_args /* {
-		struct vnode *a_vp;
-		struct vattr *a_vap;
-		struct ucred *a_cred;
-	} */ *ap;
+static int 
+ufs_getattr (struct vop_getattr_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct inode *ip = VTOI(vp);
@@ -504,13 +475,8 @@ ufs_getattr(ap)
 /*
  * Set attribute vnode op. called from several syscalls
  */
-static int
-ufs_setattr(ap)
-	struct vop_setattr_args /* {
-		struct vnode *a_vp;
-		struct vattr *a_vap;
-		struct ucred *a_cred;
-	} */ *ap;
+static int 
+ufs_setattr (struct vop_setattr_args *ap)
 {
 	struct vattr *vap = ap->a_vap;
 	struct vnode *vp = ap->a_vp;
@@ -701,11 +667,8 @@ out:
  * Mark this file's access time for update for vfs_mark_atime().  This
  * is called from execve() and mmap().
  */
-static int
-ufs_markatime(ap)
-	struct vop_markatime_args /* {
-		struct vnode *a_vp;
-	} */ *ap;
+static int 
+ufs_markatime (struct vop_markatime_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct inode *ip = VTOI(vp);
@@ -723,12 +686,8 @@ ufs_markatime(ap)
  * Change the mode on a file.
  * Inode must be locked before calling.
  */
-static int
-ufs_chmod(vp, mode, cred, td)
-	struct vnode *vp;
-	int mode;
-	struct ucred *cred;
-	struct thread *td;
+static int 
+ufs_chmod (struct vnode *vp, int mode, struct ucred *cred, struct thread *td)
 {
 	struct inode *ip = VTOI(vp);
 	int error;
@@ -897,13 +856,8 @@ good:
 	return (error);
 }
 
-static int
-ufs_remove(ap)
-	struct vop_remove_args /* {
-		struct vnode *a_dvp;
-		struct vnode *a_vp;
-		struct componentname *a_cnp;
-	} */ *ap;
+static int 
+ufs_remove (struct vop_remove_args *ap)
 {
 	struct inode *ip;
 	struct vnode *vp = ap->a_vp;
@@ -956,13 +910,8 @@ print_bad_link_count(const char *funcname, struct vnode *dvp)
 /*
  * link vnode call
  */
-static int
-ufs_link(ap)
-	struct vop_link_args /* {
-		struct vnode *a_tdvp;
-		struct vnode *a_vp;
-		struct componentname *a_cnp;
-	} */ *ap;
+static int 
+ufs_link (struct vop_link_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct vnode *tdvp = ap->a_tdvp;
@@ -1024,13 +973,8 @@ out:
 /*
  * whiteout vnode call
  */
-static int
-ufs_whiteout(ap)
-	struct vop_whiteout_args /* {
-		struct vnode *a_dvp;
-		struct componentname *a_cnp;
-		int a_flags;
-	} */ *ap;
+static int 
+ufs_whiteout (struct vop_whiteout_args *ap)
 {
 	struct vnode *dvp = ap->a_dvp;
 	struct componentname *cnp = ap->a_cnp;
@@ -1105,16 +1049,8 @@ SYSCTL_INT(_vfs_ufs, OID_AUTO, rename_restarts, CTLFLAG_RD,
  *    is different from the source, patch the ".." entry in the
  *    directory.
  */
-static int
-ufs_rename(ap)
-	struct vop_rename_args  /* {
-		struct vnode *a_fdvp;
-		struct vnode *a_fvp;
-		struct componentname *a_fcnp;
-		struct vnode *a_tdvp;
-		struct vnode *a_tvp;
-		struct componentname *a_tcnp;
-	} */ *ap;
+static int 
+ufs_rename (struct vop_rename_args *ap)
 {
 	struct vnode *tvp = ap->a_tvp;
 	struct vnode *tdvp = ap->a_tdvp;
@@ -1768,14 +1704,8 @@ out:
 /*
  * Mkdir system call
  */
-static int
-ufs_mkdir(ap)
-	struct vop_mkdir_args /* {
-		struct vnode *a_dvp;
-		struct vnode **a_vpp;
-		struct componentname *a_cnp;
-		struct vattr *a_vap;
-	} */ *ap;
+static int 
+ufs_mkdir (struct vop_mkdir_args *ap)
 {
 	struct vnode *dvp = ap->a_dvp;
 	struct vattr *vap = ap->a_vap;
@@ -2013,13 +1943,8 @@ out:
 /*
  * Rmdir system call.
  */
-static int
-ufs_rmdir(ap)
-	struct vop_rmdir_args /* {
-		struct vnode *a_dvp;
-		struct vnode *a_vp;
-		struct componentname *a_cnp;
-	} */ *ap;
+static int 
+ufs_rmdir (struct vop_rmdir_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct vnode *dvp = ap->a_dvp;
@@ -2108,15 +2033,8 @@ out:
 /*
  * symlink -- make a symbolic link
  */
-static int
-ufs_symlink(ap)
-	struct vop_symlink_args /* {
-		struct vnode *a_dvp;
-		struct vnode **a_vpp;
-		struct componentname *a_cnp;
-		struct vattr *a_vap;
-		char *a_target;
-	} */ *ap;
+static int 
+ufs_symlink (struct vop_symlink_args *ap)
 {
 	struct vnode *vp, **vpp = ap->a_vpp;
 	struct inode *ip;
@@ -2147,16 +2065,8 @@ ufs_symlink(ap)
 /*
  * Vnode op for reading directories.
  */
-int
-ufs_readdir(ap)
-	struct vop_readdir_args /* {
-		struct vnode *a_vp;
-		struct uio *a_uio;
-		struct ucred *a_cred;
-		int *a_eofflag;
-		int *a_ncookies;
-		u_long **a_cookies;
-	} */ *ap;
+int 
+ufs_readdir (struct vop_readdir_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct uio *uio = ap->a_uio;
@@ -2281,13 +2191,8 @@ nextentry:
 /*
  * Return target name of a symbolic link
  */
-static int
-ufs_readlink(ap)
-	struct vop_readlink_args /* {
-		struct vnode *a_vp;
-		struct uio *a_uio;
-		struct ucred *a_cred;
-	} */ *ap;
+static int 
+ufs_readlink (struct vop_readlink_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct inode *ip = VTOI(vp);
@@ -2308,12 +2213,8 @@ ufs_readlink(ap)
  * In order to be able to swap to a file, the ufs_bmaparray() operation may not
  * deadlock on memory.  See ufs_bmap() for details.
  */
-static int
-ufs_strategy(ap)
-	struct vop_strategy_args /* {
-		struct vnode *a_vp;
-		struct buf *a_bp;
-	} */ *ap;
+static int 
+ufs_strategy (struct vop_strategy_args *ap)
 {
 	struct buf *bp = ap->a_bp;
 	struct vnode *vp = ap->a_vp;
@@ -2344,11 +2245,8 @@ ufs_strategy(ap)
 /*
  * Print out the contents of an inode.
  */
-static int
-ufs_print(ap)
-	struct vop_print_args /* {
-		struct vnode *a_vp;
-	} */ *ap;
+static int 
+ufs_print (struct vop_print_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct inode *ip = VTOI(vp);
@@ -2366,14 +2264,8 @@ ufs_print(ap)
  *
  * Update the times on the inode then do device close.
  */
-static int
-ufsfifo_close(ap)
-	struct vop_close_args /* {
-		struct vnode *a_vp;
-		int  a_fflag;
-		struct ucred *a_cred;
-		struct thread *a_td;
-	} */ *ap;
+static int 
+ufsfifo_close (struct vop_close_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	int usecount;
@@ -2391,9 +2283,8 @@ ufsfifo_close(ap)
  *
  * Fall through to ufs kqfilter routines if needed 
  */
-static int
-ufsfifo_kqfilter(ap)
-	struct vop_kqfilter_args *ap;
+static int 
+ufsfifo_kqfilter (struct vop_kqfilter_args *ap)
 {
 	int error;
 
@@ -2406,13 +2297,8 @@ ufsfifo_kqfilter(ap)
 /*
  * Return POSIX pathconf information applicable to fifos.
  */
-static int
-ufsfifo_pathconf(ap)
-	struct vop_pathconf_args /* {
-		struct vnode *a_vp;
-		int a_name;
-		int *a_retval;
-	} */ *ap;
+static int 
+ufsfifo_pathconf (struct vop_pathconf_args *ap)
 {
 
 	switch (ap->a_name) {
@@ -2430,13 +2316,8 @@ ufsfifo_pathconf(ap)
 /*
  * Return POSIX pathconf information applicable to ufs filesystems.
  */
-static int
-ufs_pathconf(ap)
-	struct vop_pathconf_args /* {
-		struct vnode *a_vp;
-		int a_name;
-		int *a_retval;
-	} */ *ap;
+static int 
+ufs_pathconf (struct vop_pathconf_args *ap)
 {
 	int error;
 
@@ -2549,11 +2430,8 @@ ufs_pathconf(ap)
  * Initialize the vnode associated with a new inode, handle aliased
  * vnodes.
  */
-int
-ufs_vinit(mntp, fifoops, vpp)
-	struct mount *mntp;
-	struct vop_vector *fifoops;
-	struct vnode **vpp;
+int 
+ufs_vinit (struct mount *mntp, struct vop_vector *fifoops, struct vnode **vpp)
 {
 	struct inode *ip;
 	struct vnode *vp;
@@ -2574,13 +2452,8 @@ ufs_vinit(mntp, fifoops, vpp)
  * Allocate a new inode.
  * Vnode dvp must be locked.
  */
-static int
-ufs_makeinode(mode, dvp, vpp, cnp, callfunc)
-	int mode;
-	struct vnode *dvp;
-	struct vnode **vpp;
-	struct componentname *cnp;
-	const char *callfunc;
+static int 
+ufs_makeinode (int mode, struct vnode *dvp, struct vnode **vpp, struct componentname *cnp, const char *callfunc)
 {
 	struct inode *ip, *pdir;
 	struct direct newdir;

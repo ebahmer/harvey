@@ -474,12 +474,8 @@ SYSCTL_INT(_vfs_ffs, OID_AUTO, maxclustersearch, CTLFLAG_RW, &maxclustersearch,
 static volatile int prtrealloc = 0;
 #endif
 
-int
-ffs_reallocblks(ap)
-	struct vop_reallocblks_args /* {
-		struct vnode *a_vp;
-		struct cluster_save *a_buflist;
-	} */ *ap;
+int 
+ffs_reallocblks (struct vop_reallocblks_args *ap)
 {
 	struct ufsmount *ump;
 
@@ -507,12 +503,8 @@ ffs_reallocblks(ap)
 	return (ffs_reallocblks_ufs2(ap));
 }
 	
-static int
-ffs_reallocblks_ufs1(ap)
-	struct vop_reallocblks_args /* {
-		struct vnode *a_vp;
-		struct cluster_save *a_buflist;
-	} */ *ap;
+static int 
+ffs_reallocblks_ufs1 (struct vop_reallocblks_args *ap)
 {
 	struct fs *fs;
 	struct inode *ip;
@@ -757,12 +749,8 @@ fail:
 	return (ENOSPC);
 }
 
-static int
-ffs_reallocblks_ufs2(ap)
-	struct vop_reallocblks_args /* {
-		struct vnode *a_vp;
-		struct cluster_save *a_buflist;
-	} */ *ap;
+static int 
+ffs_reallocblks_ufs2 (struct vop_reallocblks_args *ap)
 {
 	struct fs *fs;
 	struct inode *ip;
@@ -1020,12 +1008,8 @@ fail:
  *   2) quadradically rehash into other cylinder groups, until an
  *      available inode is located.
  */
-int
-ffs_valloc(pvp, mode, cred, vpp)
-	struct vnode *pvp;
-	int mode;
-	struct ucred *cred;
-	struct vnode **vpp;
+int 
+ffs_valloc (struct vnode *pvp, int mode, struct ucred *cred, struct vnode **vpp)
 {
 	struct inode *pip;
 	struct fs *fs;
@@ -2288,10 +2272,8 @@ struct ffs_blkfree_trim_params {
 	struct workhead dephd;
 };
 
-static void
-ffs_blkfree_trim_task(ctx, pending)
-	void *ctx;
-	int pending;
+static void 
+ffs_blkfree_trim_task (void *ctx, int pending)
 {
 	struct ffs_blkfree_trim_params *tp;
 
@@ -2303,9 +2285,8 @@ ffs_blkfree_trim_task(ctx, pending)
 	free(tp, M_TEMP);
 }
 
-static void
-ffs_blkfree_trim_completed(bip)
-	struct bio *bip;
+static void 
+ffs_blkfree_trim_completed (struct bio *bip)
 {
 	struct ffs_blkfree_trim_params *tp;
 
@@ -2766,8 +2747,8 @@ SYSCTL_INT(_debug, OID_AUTO, fsckcmds, CTLFLAG_RW, &fsckcmds, 0, "");
 static int buffered_write(struct file *, struct uio *, struct ucred *,
 	int, struct thread *);
 
-static int
-sysctl_ffs_fsck(SYSCTL_HANDLER_ARGS)
+static int 
+sysctl_ffs_fsck (int SYSCTL_HANDLER_ARGS)
 {
 	struct thread *td = curthread;
 	struct fsck_cmd cmd;
@@ -3144,13 +3125,8 @@ sysctl_ffs_fsck(SYSCTL_HANDLER_ARGS)
  * will give snapshots a chance to copy modified blocks for which it
  * needs to retain copies.
  */
-static int
-buffered_write(fp, uio, active_cred, flags, td)
-	struct file *fp;
-	struct uio *uio;
-	struct ucred *active_cred;
-	int flags;
-	struct thread *td;
+static int 
+buffered_write (struct file *fp, struct uio *uio, struct ucred *active_cred, int flags, struct thread *td)
 {
 	struct vnode *devvp, *vp;
 	struct inode *ip;

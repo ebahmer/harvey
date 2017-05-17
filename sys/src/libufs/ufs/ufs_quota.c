@@ -1653,10 +1653,8 @@ dqflush(struct vnode *vp)
  * Acquire a reference to the quota structures associated with a vnode.
  * Return count of number of quota structures found.
  */
-int
-quotaref(vp, qrp)
-	struct vnode *vp;
-	struct dquot **qrp;
+int 
+quotaref (struct vnode *vp, struct dquot **qrp)
 {
 	struct inode *ip;
 	struct dquot *dq;
@@ -1690,9 +1688,8 @@ quotaref(vp, qrp)
 /*
  * Release a set of quota structures obtained from a vnode.
  */
-void
-quotarele(qrp)
-	struct dquot **qrp;
+void 
+quotarele (struct dquot **qrp)
 {
 	struct dquot *dq;
 	int i;
